@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // 1. <Link> 컴포넌트를 import 합니다.
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const SearchBar: React.FC = () => {
   // 사용자가 입력한 검색어를 저장하기 위한 state
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // isDarkMode 상태가 바뀔 때마다 <html> 태그에 'dark' 클래스를 토글합니다.
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+  
   // input의 내용이 변경될 때마다 실행되는 함수
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -21,21 +35,24 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <header style={{ padding: '20px', backgroundColor: '#282c34', textAlign: 'center', color: 'white' }}>
-      {/* 2. <h1> 태그를 <Link>로 감싸줍니다. to="/"는 클릭 시 메인 페이지로 이동하라는 의미입니다. */}
-      <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-        <h1>My Movie App</h1>
-      </Link>
-      <div>
+    <header className="p-5 bg-gray-100 dark:bg-gray-800 text-center transition-colors">
+      <div className="flex justify-between items-center max-w-5xl mx-auto mb-4">
+        <Link to="/" className="no-underline text-gray-800 dark:text-white">
+          <h1 className="text-3xl font-bold">My Movie App</h1>
+        </Link>
+        <button onClick={toggleDarkMode} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
+      <div className="flex justify-center">
         <input
           type="text"
           placeholder="영화 제목을 검색하세요..."
-          style={{ padding: '10px', width: '40%', marginRight: '10px', fontSize: '16px', borderRadius: '4px', border: 'none' }}
+          className="p-2 w-1/2 md:w-1/3 rounded-l-md border-0 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none"
           value={searchTerm}
           onChange={handleInputChange}
         />
-        {/* 버튼에 onClick 이벤트를 추가합니다. */}
-        <button onClick={handleSearchClick} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', borderRadius: '4px', border: 'none', backgroundColor: '#61dafb' }}>
+        <button onClick={handleSearchClick} className="p-2 px-4 bg-blue-500 rounded-r-md hover:bg-blue-600 transition-colors">
           검색
         </button>
       </div>

@@ -38,21 +38,22 @@ const SearchPage: React.FC = () => {
   }, [query]); // 'query'가 변경될 때마다 이 useEffect가 다시 실행됩니다.
 
   if (loading) {
-    return <div style={{ textAlign: 'center', padding: '50px', fontSize: '24px' }}>'{query}' 검색 중...</div>;
+    return <div className="text-center p-12 text-2xl">'{query}' 검색 중...</div>;
   }
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><h1>My Movie App</h1></Link>
-      <h1>'{query}'에 대한 검색 결과</h1>
+    <div className="p-5 text-center">
+      {/* SearchBar가 이미 앱 로고를 포함하므로 이 부분은 제거해도 좋습니다. */}
+      {/* <Link to="/" className="no-underline text-black"><h1>My Movie App</h1></Link> */}
+      <h1 className="text-3xl font-bold mb-4">'{query}'에 대한 검색 결과</h1>
       {movies.length > 0 ? (
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div className="flex flex-wrap justify-center">
           {movies.map(movie => (
-            <MovieCard key={movie.id} title={movie.title} posterUrl={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/200x300?text=No+Image'} />
+            <MovieCard key={movie.id} id={movie.id} title={movie.title} posterUrl={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/200x300?text=No+Image'} />
           ))}
         </div>
       ) : (
-        <p>검색 결과가 없습니다.</p>
+        <p className="mt-8">검색 결과가 없습니다.</p>
       )}
     </div>
   );

@@ -36,15 +36,15 @@ const MainPage: React.FC = () => {
   }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
 
   if (loading) {
-    return <div style={{ textAlign: 'center', padding: '50px', fontSize: '24px' }}>로딩 중...</div>;
+    return <div className="text-center p-12 text-2xl text-gray-800 dark:text-white">로딩 중...</div>;
   }
 
   return (
-    <div>
-      <h1 style={{ textAlign: 'center' }}>주간 인기 영화</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+    <div className="p-5">
+      <h1 className="text-3xl font-bold text-center mb-4 text-gray-800 dark:text-white">주간 인기 영화</h1>
+      <div className="flex flex-wrap justify-center">
         {movies.map(movie => (
-          <MovieCard key={movie.id} title={movie.title} posterUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
+          <MovieCard key={movie.id} id={movie.id} title={movie.title} posterUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
         ))}
       </div>
     </div>
