@@ -8,7 +8,7 @@ import MovieCardSkeleton from '../components/MovieCardSkeleton';
 interface Movie {
   id: number;
   title: string;
-  poster_path: string; // API 명세에 따라 posterUrl 대신 poster_path를 사용할 수 있습니다.
+  poster_path: string;
 }
 
 interface ApiResult {
