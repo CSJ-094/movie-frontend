@@ -10,28 +10,22 @@ import MainPage from './pages/MainPage.tsx';
 // 라우터(길잡이) 설정을 만듭니다.
 const router = createBrowserRouter([
   {
-    path: "/", // 기본 주소('/')로 접속하면 App 컴포넌트(메인 페이지)를 보여줍니다.
+    path: "/",
     element: <App />,
-  },
-  {
-    path: "/search", // '/search' 주소로 접속하면 SearchPage 컴포넌트를 보여줍니다.
-    element: <SearchPage />,
-  },
-  {
-    path: "/movie/:movieId", // '/movie/영화ID' 형태의 주소로 접속하면 MovieDetailPage를 보여줍니다.
-    element: <MovieDetailPage />,
-    children: [{
-      index: true, // 부모 경로('/')와 동일할 때 MainPage를 보여줍니다.
-      element: <MainPage />,
-    },
-    {
-      path: "search", // '/search' 경로
-      element: <SearchPage />,
-    },
-    {
-      path: "movie/:movieId", // '/movie/:movieId' 경로
-      element: <MovieDetailPage />,
-    },
+    // App 컴포넌트의 <Outlet>에 렌더링될 자식 경로들을 설정합니다.
+    children: [
+      {
+        index: true, // 부모 경로('/')와 동일할 때 MainPage를 보여줍니다.
+        element: <MainPage />,
+      },
+      {
+        path: "search", // '/search' 경로
+        element: <SearchPage />,
+      },
+      {
+        path: "movie/:movieId", // '/movie/:movieId' 경로
+        element: <MovieDetailPage />,
+      },
     ],
   },
 ]);

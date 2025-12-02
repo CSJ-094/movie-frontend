@@ -5,14 +5,20 @@ const SearchBar: React.FC = () => {
   // 사용자가 입력한 검색어를 저장하기 위한 state
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // 1. localStorage에서 저장된 값을 읽어와 초기 상태를 설정합니다.
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    return savedMode === 'true';
+  });
 
-  // isDarkMode 상태가 바뀔 때마다 <html> 태그에 'dark' 클래스를 토글합니다.
+  // 2. isDarkMode 상태가 바뀔 때마다 <html> 태그에 'dark' 클래스를 토글하고, localStorage에 상태를 저장합니다.
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
     }
   }, [isDarkMode]);
 
